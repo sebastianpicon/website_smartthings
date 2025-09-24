@@ -353,6 +353,9 @@ class SmartThingsPWA {
             const current = data.current_weather;
             const hourly = data.hourly;
             
+            // Calculate UV index based on time, season, and weather
+            const uvIndex = this.calculateRealisticUV(lat, current.weathercode);
+            
             return {
                 temperature: Math.round(current.temperature),
                 condition: this.getWeatherCondition(current.weathercode),
@@ -360,7 +363,7 @@ class SmartThingsPWA {
                 humidity: Math.round(hourly.relativehumidity_2m[0]),
                 windSpeed: Math.round(current.windspeed),
                 feelsLike: Math.round(current.temperature + (current.windspeed > 10 ? -2 : 0)),
-                uvIndex: Math.round(Math.random() * 8 + 1), // UV not available in free tier
+                uvIndex: uvIndex,
                 location: `${lat.toFixed(2)}°, ${lon.toFixed(2)}°`,
                 lastUpdated: new Date().toLocaleTimeString()
             };
@@ -417,11 +420,48 @@ class SmartThingsPWA {
             humidity: Math.round(50 + (Math.random() - 0.5) * 40),
             windSpeed: Math.round(5 + Math.random() * 20),
             feelsLike: Math.round(baseTemp + (Math.random() - 0.5) * 4),
-            uvIndex: Math.max(0, Math.round((hour > 6 && hour < 18) ? Math.random() * 8 + 2 : 0)),
+            uvIndex: this.calculateRealisticUV(lat, 0), // Use realistic UV calculation
             location: `${lat.toFixed(2)}°, ${lon.toFixed(2)}°`,
             lastUpdated: new Date().toLocaleTimeString(),
             note: 'Simulated data - API unavailable'
         };
+    }
+
+    calculateRealisticUV(lat, weathercode = 0) {
+        const now = new Date();
+        const hour = now.getHours();
+        const month = now.getMonth();
+        const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        
+        // UV is 0 at night
+        if (hour < 6 || hour > 18) return 0;
+        
+        // Base UV on latitude (closer to equator = higher UV)
+        let baseUV = Math.max(0, 11 - Math.abs(lat) / 8);
+        
+        // Seasonal adjustment (higher in summer)
+        const seasonalFactor = 0.7 + 0.3 * Math.cos(2 * Math.PI * (dayOfYear - 172) / 365);
+        baseUV *= seasonalFactor;
+        
+        // Daily variation (peak at solar noon)
+        const dailyFactor = Math.sin(Math.PI * (hour - 6) / 12);
+        baseUV *= dailyFactor;
+        
+        // Weather condition adjustment
+        const weatherAdjustment = {
+            0: 1.0,    // Clear sky
+            1: 0.9,    // Mainly clear
+            2: 0.7,    // Partly cloudy
+            3: 0.5,    // Overcast
+            45: 0.3,   // Foggy
+            51: 0.4,   // Light drizzle
+            61: 0.3,   // Rain
+            71: 0.2    // Snow
+        };
+        
+        baseUV *= (weatherAdjustment[weathercode] || 0.6);
+        
+        return Math.max(0, Math.round(baseUV));
     }
 
     getSeasonalConditions(month, absLat) {

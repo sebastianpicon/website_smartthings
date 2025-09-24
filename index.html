@@ -235,7 +235,28 @@
         <div class="quick-actions" id="quickActions" style="display: none;">
             <button class="action-btn" id="fullscreenBtn">🔳 Fullscreen</button>
             <button class="action-btn" id="shareBtn">🔗 Share</button>
-            <button class="action-btn" id="refreshBtn">🔄 Refresh All</button>
+                                <button class="action-btn" onclick="app.refreshAllData()">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Refresh All</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Install Banner -->
+        <div id="installBanner" class="install-banner" style="display: none;">
+            <div class="install-content">
+                <div class="install-icon">📱</div>
+                <div class="install-text">
+                    <h3>Install SmartThings PWA</h3>
+                    <p>Get the full app experience with offline access</p>
+                </div>
+                <div class="install-actions">
+                    <button id="installBtn" class="install-btn">Install</button>
+                    <button id="dismissBtn" class="dismiss-btn">×</button>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 

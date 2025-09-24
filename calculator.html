@@ -476,6 +476,23 @@
             animation: fadeIn 0.6s ease;
         }
 
+        /* Back Button Styling */
+        .back-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            transform: translateX(-2px);
+        }
+
         /* Scrollbar Styling */
         .history-list::-webkit-scrollbar {
             width: 6px;
@@ -651,5 +668,12 @@ Examples:
     </main>
 
     <script src="./js/calculator.js"></script>
+    <script>
+        // Apply saved theme on calculator page
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('smartthings-theme') || 'default';
+            document.body.className = savedTheme !== 'default' ? `theme-${savedTheme}` : '';
+        });
+    </script>
 </body>
 </html>
