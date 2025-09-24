@@ -675,24 +675,62 @@ class SmartThingsPWA {
             e.preventDefault();
             this.deferredPrompt = e;
             this.showInstallBanner();
-        });
-
-        document.getElementById('installBtn').addEventListener('click', async () => {
-            if (!this.deferredPrompt) return;
             
-            this.deferredPrompt.prompt();
-            const { outcome } = await this.deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                this.hideInstallBanner();
+            // Show install button in weather actions
+            const mainInstallBtn = document.getElementById('mainInstallBtn');
+            if (mainInstallBtn) {
+                mainInstallBtn.style.display = 'inline-block';
             }
             
-            this.deferredPrompt = null;
+            console.log('PWA install prompt available');
+        });
+
+        // Handle install banner buttons
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            await this.promptInstall();
         });
 
         document.getElementById('dismissBtn').addEventListener('click', () => {
             this.hideInstallBanner();
         });
+
+        // Handle main install button
+        const mainInstallBtn = document.getElementById('mainInstallBtn');
+        if (mainInstallBtn) {
+            mainInstallBtn.addEventListener('click', async () => {
+                await this.promptInstall();
+            });
+        }
+
+        // Check if app is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('PWA is already installed');
+        }
+    }
+
+    async promptInstall() {
+        if (!this.deferredPrompt) {
+            // Fallback for browsers that don't support install prompt
+            this.showToast('Install: Add this page to your home screen from browser menu');
+            return;
+        }
+        
+        try {
+            this.deferredPrompt.prompt();
+            const { outcome } = await this.deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                this.hideInstallBanner();
+                this.showToast('App installed successfully!');
+            } else {
+                this.showToast('Installation cancelled');
+            }
+        } catch (error) {
+            console.log('Install prompt error:', error);
+            this.showToast('Install: Add this page to your home screen');
+        }
+        
+        this.deferredPrompt = null;
     }
 
     showInstallBanner() {
@@ -729,6 +767,11 @@ class SmartThingsPWA {
         // Quick action handlers
         document.getElementById('fullscreenBtn').addEventListener('click', () => {
             this.toggleFullscreen();
+            this.closeQuickActions();
+        });
+
+        document.getElementById('installAppBtn').addEventListener('click', () => {
+            this.promptInstall();
             this.closeQuickActions();
         });
 

@@ -151,6 +151,7 @@
                         <div class="weather-actions">
                             <button class="refresh-btn" id="refreshWeather">🔄 Refresh</button>
                             <button class="location-btn" id="getLocationBtn">📍 Get Location</button>
+                            <button class="install-btn-main" id="mainInstallBtn" style="display: none;">📱 Install</button>
                         </div>
                     </div>
                 </div>
@@ -234,12 +235,13 @@
         <!-- Quick Actions Menu -->
         <div class="quick-actions" id="quickActions" style="display: none;">
             <button class="action-btn" id="fullscreenBtn">🔳 Fullscreen</button>
+            <button class="action-btn" id="installAppBtn">� Install App</button>
             <button class="action-btn" id="shareBtn">🔗 Share</button>
-                                <button class="action-btn" onclick="app.refreshAllData()">
-                        <span class="btn-icon">🔄</span>
-                        <span class="btn-text">Refresh All</span>
-                    </button>
-                </div>
+            <button class="action-btn" onclick="app.refreshAllData()">
+                <span class="btn-icon">🔄</span>
+                <span class="btn-text">Refresh All</span>
+            </button>
+        </div>
             </div>
         </main>
 
