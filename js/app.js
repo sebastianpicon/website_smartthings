@@ -121,18 +121,51 @@ class SmartThingsPWA {
         document.getElementById('currentTime').textContent = timeString;
         document.getElementById('currentDate').textContent = dateString;
 
-        // Analog clock
+        // Analog clock - extract current time values then add adjustments
         const seconds = now.getSeconds();
         const minutes = now.getMinutes();
         const hours = now.getHours() % 12;
+        
+        // Add the desired offsets
+        let adjustedSeconds = seconds ;
+        let adjustedMinutes = minutes + 15;
+        let adjustedHours = hours + 3;
+        
+        // Handle overflow properly
+        if (adjustedSeconds >= 60) adjustedSeconds -= 60;
+        if (adjustedMinutes >= 60) adjustedMinutes -= 60;
+        if (adjustedHours >= 12) adjustedHours -= 12;
 
-        const secondAngle = (seconds * 6) - 90; // 6 degrees per second
-        const minuteAngle = (minutes * 6) - 90; // 6 degrees per minute
-        const hourAngle = (hours * 30) + (minutes * 0.5) - 90; // 30 degrees per hour + minute adjustment
+        // Test with fixed angles to see if hands move at all
+        const secondAngle = 0;   // Should point to 12 o'clock
+        const minuteAngle = 90;  // Should point to 3 o'clock  
+        const hourAngle = 180;   // Should point to 6 o'clock
 
-        document.getElementById('secondHand').style.transform = `rotate(${secondAngle}deg)`;
-        document.getElementById('minuteHand').style.transform = `rotate(${minuteAngle}deg)`;
-        document.getElementById('hourHand').style.transform = `rotate(${hourAngle}deg)`;
+        // Debug: Check if elements exist and log values
+        const secondHand = document.getElementById('secondHand');
+        const minuteHand = document.getElementById('minuteHand');
+        const hourHand = document.getElementById('hourHand');
+        
+        console.log('Clock Debug:', {
+            secondHand: !!secondHand,
+            minuteHand: !!minuteHand, 
+            hourHand: !!hourHand,
+            angles: { secondAngle, minuteAngle, hourAngle },
+            time: `${hours}:${minutes}:${seconds}`
+        });
+
+        if (secondHand) {
+            secondHand.style.transform = `rotate(${secondAngle}deg)`;
+            console.log('Second hand transform applied:', secondHand.style.transform);
+        }
+        if (minuteHand) {
+            minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+            console.log('Minute hand transform applied:', minuteHand.style.transform);
+        }
+        if (hourHand) {
+            hourHand.style.transform = `rotate(${hourAngle}deg)`;
+            console.log('Hour hand transform applied:', hourHand.style.transform);
+        }
     }
 
     // System Information

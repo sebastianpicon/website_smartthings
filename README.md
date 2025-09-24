@@ -5,18 +5,18 @@ A modern Progressive Web App that monitors your device's battery status and prov
 ## ✨ Features
 
 - **Battery Monitoring**: Real-time battery percentage, charging status, and time estimates
+- **Real Weather Data**: GPS-based weather with temperature, humidity, UV index, and conditions
+- **Advanced Calculator**: Scientific and calculus calculator with history (separate page)
 - **System Information**: Browser, platform, screen resolution, memory usage, and online status
 - **Multiple Themes**: Choose from 5 beautiful color themes
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
-- **Performance Monitor**: Real-time FPS counter and performance charts
-- **Weather Simulator**: Fun random weather data with refresh functionality
 - **Analog & Digital Clock**: Beautiful time display with both formats
 - **PWA Features**: Installable, works offline, background sync
 - **Quick Actions**: Fullscreen mode, sharing, and refresh functionality
 
 ## 🚀 Live Demo
 
-Visit the live app: [SmartThings PWA](https://your-username.github.io/website_smartthings)
+Visit the live app: [SmartThings PWA](https://sebastianpicon.github.io/website_smartthings/)
 
 ## 📱 Installation
 
@@ -29,7 +29,7 @@ Visit the live app: [SmartThings PWA](https://your-username.github.io/website_sm
 ### Manual Installation:
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/website_smartthings.git
+   git clone https://github.com/sebastianpicon/website_smartthings.git
    ```
 2. Open `index.html` in your browser
 3. Or serve it using a local server:
@@ -46,7 +46,8 @@ Visit the live app: [SmartThings PWA](https://your-username.github.io/website_sm
 - **JavaScript ES6+**: Modern JavaScript with async/await, modules
 - **Service Workers**: Offline functionality and caching
 - **Battery API**: Device battery status monitoring
-- **Canvas API**: Performance monitoring charts
+- **Geolocation API**: GPS positioning for weather data
+- **Open-Meteo API**: Real weather data integration
 - **Web Share API**: Native sharing capabilities
 - **Fullscreen API**: Immersive fullscreen experience
 
@@ -117,19 +118,20 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 🐛 Issues & Support
 
 If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/your-username/website_smartthings/issues) page
+1. Check the [Issues](https://github.com/sebastianpicon/website_smartthings/issues) page
 2. Create a new issue if your problem isn't already reported
 3. Provide as much detail as possible about your environment and the issue
 
 ## 🔮 Future Features
 
-- [ ] Weather API integration
+- [ ] Weather alerts and notifications
 - [ ] More system information (CPU usage, etc.)
 - [ ] Customizable dashboard layout
 - [ ] Push notifications for battery alerts
 - [ ] Data export functionality
 - [ ] More theme options
 - [ ] Widget customization
+- [ ] Calculator improvements and more modes
 
 ## 📸 Screenshots
 
@@ -141,6 +143,6 @@ If you encounter any issues or have questions:
 
 ---
 
-Made with ❤️ and ⚡ by [Your Name]
+Made with ❤️ and ⚡ by Sebastian Picon
 
 *Enjoy monitoring your battery in style!* 🔋✨
