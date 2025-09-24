@@ -578,6 +578,7 @@ class SmartThingsPWA {
         
         this.applyTheme(savedTheme);
         
+        // Set active theme option
         colorOptions.forEach(option => {
             if (option.dataset.theme === savedTheme) {
                 option.classList.add('active');
@@ -590,12 +591,44 @@ class SmartThingsPWA {
                 const theme = option.dataset.theme;
                 this.applyTheme(theme);
                 localStorage.setItem('smartthings-theme', theme);
+                
+                // Trigger storage event for other tabs
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'smartthings-theme',
+                    newValue: theme,
+                    oldValue: savedTheme
+                }));
             });
+        });
+        
+        // Listen for theme changes from other pages
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'smartthings-theme') {
+                console.log('Main page received theme change:', e.newValue);
+                this.applyTheme(e.newValue);
+                this.updateActiveThemeOption(e.newValue);
+            }
         });
     }
 
     applyTheme(theme) {
-        document.body.className = theme !== 'default' ? `theme-${theme}` : '';
+        // Remove all theme classes
+        document.body.classList.remove('theme-blue', 'theme-green', 'theme-purple', 'theme-orange');
+        
+        // Apply new theme
+        if (theme !== 'default') {
+            document.body.classList.add(`theme-${theme}`);
+        }
+    }
+
+    updateActiveThemeOption(theme) {
+        const colorOptions = document.querySelectorAll('.color-option');
+        colorOptions.forEach(option => {
+            option.classList.remove('active');
+            if (option.dataset.theme === theme) {
+                option.classList.add('active');
+            }
+        });
     }
 
     // Performance Monitor

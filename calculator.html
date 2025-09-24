@@ -719,83 +719,138 @@ Examples:
 
     <script src="./js/calculator.js"></script>
     <script>
-        // Theme system for calculator page
-        class ThemeManager {
+        // Advanced Theme Manager for Calculator Page
+        class CalculatorThemeManager {
             constructor() {
+                this.currentTheme = 'default';
                 this.init();
             }
 
             init() {
                 // Apply saved theme immediately
-                this.applySavedTheme();
+                this.loadAndApplyTheme();
+                
+                // Add theme selector after header loads
+                setTimeout(() => this.addThemeSelector(), 100);
                 
                 // Listen for theme changes from main page
                 window.addEventListener('storage', (e) => {
                     if (e.key === 'smartthings-theme') {
-                        this.applySavedTheme();
+                        console.log('Theme changed from other page:', e.newValue);
+                        this.currentTheme = e.newValue || 'default';
+                        this.applyTheme(this.currentTheme);
+                        this.updateActiveOption(this.currentTheme);
                     }
                 });
-
-                // Add theme selector to calculator page
-                this.addThemeSelector();
             }
 
-            applySavedTheme() {
+            loadAndApplyTheme() {
                 const savedTheme = localStorage.getItem('smartthings-theme') || 'default';
-                document.body.className = savedTheme !== 'default' ? `theme-${savedTheme}` : '';
+                console.log('Loading theme:', savedTheme);
+                this.currentTheme = savedTheme;
+                this.applyTheme(savedTheme);
+            }
+
+            applyTheme(theme) {
+                console.log('Applying theme:', theme);
                 
-                // Update theme selector if it exists
-                const activeOption = document.querySelector('.color-option.active');
-                if (activeOption) activeOption.classList.remove('active');
+                // Remove all existing theme classes
+                document.body.classList.remove('theme-blue', 'theme-green', 'theme-purple', 'theme-orange');
                 
-                const currentOption = document.querySelector(`[data-theme="${savedTheme}"]`);
-                if (currentOption) currentOption.classList.add('active');
+                // Apply new theme class
+                if (theme !== 'default') {
+                    document.body.classList.add(`theme-${theme}`);
+                }
+                
+                // Store current theme
+                this.currentTheme = theme;
             }
 
             addThemeSelector() {
                 const header = document.querySelector('.header-content');
-                if (header) {
-                    const themeSelector = document.createElement('div');
-                    themeSelector.className = 'theme-selector';
-                    themeSelector.innerHTML = `
-                        <div class="color-options">
-                            <div class="color-option active" data-theme="default" title="Default"></div>
-                            <div class="color-option" data-theme="blue" title="Blue"></div>
-                            <div class="color-option" data-theme="green" title="Green"></div>
-                            <div class="color-option" data-theme="purple" title="Purple"></div>
-                            <div class="color-option" data-theme="orange" title="Orange"></div>
-                        </div>
-                    `;
-                    header.appendChild(themeSelector);
-                    
-                    this.setupThemeSelector();
+                if (!header) {
+                    console.log('Header not found, retrying...');
+                    setTimeout(() => this.addThemeSelector(), 200);
+                    return;
                 }
+                
+                // Remove existing theme selector
+                const existing = header.querySelector('.theme-selector');
+                if (existing) existing.remove();
+                
+                const themeSelector = document.createElement('div');
+                themeSelector.className = 'theme-selector';
+                themeSelector.innerHTML = `
+                    <div class="color-options">
+                        <div class="color-option" data-theme="default" title="Default"></div>
+                        <div class="color-option" data-theme="blue" title="Blue"></div>
+                        <div class="color-option" data-theme="green" title="Green"></div>
+                        <div class="color-option" data-theme="purple" title="Purple"></div>
+                        <div class="color-option" data-theme="orange" title="Orange"></div>
+                    </div>
+                `;
+                
+                header.appendChild(themeSelector);
+                console.log('Theme selector added to calculator');
+                
+                // Setup theme selector functionality
+                this.setupThemeSelector();
             }
 
             setupThemeSelector() {
                 const colorOptions = document.querySelectorAll('.color-option');
-                const savedTheme = localStorage.getItem('smartthings-theme') || 'default';
+                
+                // Set active theme
+                this.updateActiveOption(this.currentTheme);
                 
                 colorOptions.forEach(option => {
-                    if (option.dataset.theme === savedTheme) {
-                        option.classList.add('active');
-                    }
-                    
                     option.addEventListener('click', () => {
+                        const newTheme = option.dataset.theme;
+                        console.log('Theme selected:', newTheme);
+                        
+                        // Update active state
                         colorOptions.forEach(opt => opt.classList.remove('active'));
                         option.classList.add('active');
                         
-                        const theme = option.dataset.theme;
-                        document.body.className = theme !== 'default' ? `theme-${theme}` : '';
-                        localStorage.setItem('smartthings-theme', theme);
+                        // Apply theme
+                        this.applyTheme(newTheme);
+                        
+                        // Save to localStorage
+                        localStorage.setItem('smartthings-theme', newTheme);
+                        
+                        // Notify other tabs
+                        this.notifyOtherTabs(newTheme);
                     });
                 });
+            }
+
+            updateActiveOption(theme) {
+                const colorOptions = document.querySelectorAll('.color-option');
+                colorOptions.forEach(option => {
+                    option.classList.remove('active');
+                    if (option.dataset.theme === theme) {
+                        option.classList.add('active');
+                    }
+                });
+            }
+
+            notifyOtherTabs(theme) {
+                // Create and dispatch custom storage event for same-tab communication
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'smartthings-theme',
+                    newValue: theme,
+                    oldValue: this.currentTheme
+                }));
+                
+                // For cross-tab communication, localStorage setter automatically triggers storage event
+                console.log('Theme change notified to other tabs:', theme);
             }
         }
 
         // Initialize theme manager when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            new ThemeManager();
+            console.log('Calculator page loaded, initializing theme manager...');
+            window.calculatorThemeManager = new CalculatorThemeManager();
         });
     </script>
 </body>
