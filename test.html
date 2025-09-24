@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Test Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .button {
+            display: inline-block;
+            background: #1a1a2e;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 10px 10px 0;
+        }
+        .button:hover {
+            background: #16213e;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔋 SmartThings PWA - Local Test</h1>
+        
+        <div id="status"></div>
+        
+        <p>Welcome to your SmartThings Progressive Web App! This page helps you test the PWA locally before deploying.</p>
+        
+        <h2>🚀 Quick Actions</h2>
+        <a href="index.html" class="button">Open SmartThings PWA</a>
+        <a href="manifest.json" class="button" target="_blank">View Manifest</a>
+        <a href="sw.js" class="button" target="_blank">View Service Worker</a>
+        
+        <h2>📋 Checklist</h2>
+        <div id="checklist">
+            <p>⏳ Checking files...</p>
+        </div>
+        
+        <h2>🌐 Deployment Steps</h2>
+        <ol>
+            <li>Run <code>deploy-to-github.bat</code> to prepare Git repository</li>
+            <li>Create a new repository on GitHub named 'website_smartthings'</li>
+            <li>Add the remote and push:
+                <pre>git remote add origin https://github.com/YOURUSERNAME/website_smartthings.git
+git branch -M main
+git push -u origin main</pre>
+            </li>
+            <li>Enable GitHub Pages with "GitHub Actions" as source</li>
+            <li>Access your PWA at: <code>https://YOURUSERNAME.github.io/website_smartthings</code></li>
+        </ol>
+        
+        <h2>✨ Features</h2>
+        <ul>
+            <li>Battery percentage monitoring</li>
+            <li>System information display</li>
+            <li>5 beautiful themes</li>
+            <li>Responsive design (mobile/tablet/desktop)</li>
+            <li>Real-time clock (digital & analog)</li>
+            <li>Performance monitoring</li>
+            <li>Weather simulator</li>
+            <li>Installable as PWA</li>
+            <li>Offline support</li>
+            <li>Quick actions menu</li>
+        </ul>
+        
+        <div class="status warning">
+            <strong>Note:</strong> Battery API may not be available on all browsers/devices. The PWA will show "N/A" if not supported.
+        </div>
+    </div>
+    
+    <script>
+        // Simple file existence checker
+        const files = [
+            'index.html',
+            'manifest.json',
+            'sw.js',
+            'styles/main.css',
+            'js/app.js',
+            'assets/favicon.svg'
+        ];
+        
+        const statusDiv = document.getElementById('status');
+        const checklistDiv = document.getElementById('checklist');
+        
+        let allGood = true;
+        let checklistHTML = '<h3>File Check Results:</h3>';
+        
+        Promise.all(files.map(file => 
+            fetch(file)
+                .then(response => ({ file, exists: response.ok }))
+                .catch(() => ({ file, exists: false }))
+        )).then(results => {
+            results.forEach(({ file, exists }) => {
+                const status = exists ? '✅' : '❌';
+                checklistHTML += `<p>${status} ${file}</p>`;
+                if (!exists) allGood = false;
+            });
+            
+            checklistDiv.innerHTML = checklistHTML;
+            
+            if (allGood) {
+                statusDiv.innerHTML = '<div class="status success"><strong>✅ All files ready!</strong> Your PWA is ready for deployment.</div>';
+            } else {
+                statusDiv.innerHTML = '<div class="status error"><strong>❌ Some files missing!</strong> Please check the file structure.</div>';
+            }
+        });
+        
+        // Check if service worker is supported
+        if ('serviceWorker' in navigator) {
+            statusDiv.innerHTML += '<div class="status success">✅ Service Worker supported in this browser</div>';
+        } else {
+            statusDiv.innerHTML += '<div class="status warning">⚠️ Service Worker not supported in this browser</div>';
+        }
+        
+        // Check if Battery API is supported
+        if ('getBattery' in navigator) {
+            statusDiv.innerHTML += '<div class="status success">✅ Battery API supported</div>';
+        } else {
+            statusDiv.innerHTML += '<div class="status warning">⚠️ Battery API not supported (will show N/A)</div>';
+        }
+    </script>
+</body>
+</html>

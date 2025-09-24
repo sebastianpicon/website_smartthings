@@ -1,0 +1,1059 @@
+/* CSS Variables for Theming */
+:root {
+  --primary-color: #1a1a2e;
+  --secondary-color: #16213e;
+  --accent-color: #0f3460;
+  --text-color: #ffffff;
+  --text-secondary: #b0b0b0;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --border-radius: 12px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme Variations */
+.theme-ocean {
+  --primary-color: #0077be;
+  --secondary-color: #004d7a;
+  --accent-color: #0099d4;
+}
+
+.theme-forest {
+  --primary-color: #2d5016;
+  --secondary-color: #3d6b26;
+  --accent-color: #4d7c2f;
+}
+
+.theme-sunset {
+  --primary-color: #ff6b6b;
+  --secondary-color: #ee5a52;
+  --accent-color: #ff7979;
+}
+
+.theme-purple {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #7b88f0;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--text-color);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: var(--transition);
+}
+
+.app-container {
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 80px;
+  z-index: 90;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  color: var(--text-color);
+  border-bottom-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Header Styles */
+.app-header {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-title .icon {
+  font-size: 1.8rem;
+}
+
+.battery-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 1px solid var(--card-border);
+}
+
+.battery-icon {
+  font-size: 1.2rem;
+}
+
+.battery-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.battery-status {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Calculator Styles */
+.calculator-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+.calculator-section {
+  min-height: 600px;
+}
+
+.calculator-mode {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mode-btn {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: var(--transition);
+}
+
+.mode-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mode-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.calculator-display {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  min-height: 80px;
+}
+
+.display-history {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  min-height: 1.2rem;
+  text-align: right;
+}
+
+.display-main {
+  font-size: 2rem;
+  font-weight: 300;
+  font-family: 'Courier New', monospace;
+  text-align: right;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
+
+.calculator-buttons {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.scientific .button-row {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.calc-btn {
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  border: 1px solid var(--card-border);
+}
+
+.calc-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.calc-btn:active {
+  transform: translateY(0);
+}
+
+.calc-btn.number {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.calc-btn.operator {
+  background: var(--accent-color);
+  color: white;
+}
+
+.calc-btn.function {
+  background: var(--warning-color);
+  color: white;
+}
+
+.calc-btn.equals {
+  background: var(--success-color);
+  color: white;
+}
+
+.calc-btn.scientific {
+  background: var(--secondary-color);
+  color: white;
+  font-size: 0.9rem;
+}
+
+.calc-btn.calculus {
+  background: #9c27b0;
+  color: white;
+}
+
+.calc-btn.wide {
+  grid-column: span 2;
+}
+
+/* Calculus Section */
+.calculus-section {
+  padding: 1rem 0;
+}
+
+.calculus-input {
+  margin-bottom: 1rem;
+}
+
+.calculus-input label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.calculus-input input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.calculus-controls {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.control-group input {
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  color: var(--text-color);
+}
+
+.calculus-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.calculus-result {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 1rem;
+  min-height: 100px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  overflow-y: auto;
+}
+
+/* History Section */
+.history-section {
+  min-height: 400px;
+}
+
+.clear-history {
+  background: var(--error-color);
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.history-list {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.history-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.history-expression {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.history-result {
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.history-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Enhanced Weather Styles */
+.weather-display {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.weather-details {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.weather-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.location-btn {
+  flex: 1;
+  padding: 0.75rem;
+  background: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.location-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.location-info {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+
+/* Card Styles */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Battery Card Specific */
+.battery-visual {
+  display: flex;
+  align-items: center;
+}
+
+.battery-shell {
+  width: 40px;
+  height: 20px;
+  border: 2px solid var(--text-color);
+  border-radius: 3px;
+  position: relative;
+  background: transparent;
+}
+
+.battery-tip {
+  width: 3px;
+  height: 8px;
+  background: var(--text-color);
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 0 2px 2px 0;
+}
+
+.battery-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success-color), var(--warning-color), var(--error-color));
+  border-radius: 1px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+.battery-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-item .label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Clock Card */
+.digital-clock {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.time {
+  font-size: 2.5rem;
+  font-weight: 300;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 0.5rem;
+}
+
+.date {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.analog-clock {
+  display: flex;
+  justify-content: center;
+}
+
+.clock-face {
+  width: 120px;
+  height: 120px;
+  border: 3px solid var(--text-color);
+  border-radius: 50%;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.center-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.hour-hand, .minute-hand, .second-hand {
+  position: absolute;
+  background: var(--text-color);
+  border-radius: 2px;
+  transform-origin: bottom center;
+  left: 50%;
+}
+
+.hour-hand {
+  width: 4px;
+  height: 30px;
+  top: 20%;
+  margin-left: -2px;
+}
+
+.minute-hand {
+  width: 2px;
+  height: 40px;
+  top: 15%;
+  margin-left: -1px;
+}
+
+.second-hand {
+  width: 1px;
+  height: 45px;
+  top: 12%;
+  margin-left: -0.5px;
+  background: var(--error-color);
+}
+
+/* System Info */
+.system-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+}
+
+.info-item .label {
+  color: var(--text-secondary);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-indicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success-color);
+}
+
+.status-indicator.offline::before {
+  background: var(--error-color);
+}
+
+/* Weather Card */
+.weather-display {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.weather-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.humidity {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.refresh-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.refresh-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Color Palette */
+.color-palette {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.color-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 3px solid transparent;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.active {
+  border-color: var(--text-color);
+}
+
+.theme-info {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Performance Chart */
+#performanceChart {
+  width: 100%;
+  height: 150px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.performance-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item .label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Install Banner */
+.install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--accent-color);
+  color: white;
+  padding: 1rem;
+  z-index: 200;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.install-banner.show {
+  transform: translateY(0);
+}
+
+.banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.banner-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.banner-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+#installBtn {
+  background: white;
+  color: var(--accent-color);
+}
+
+#dismissBtn {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: var(--transition);
+  z-index: 150;
+}
+
+.fab:hover {
+  transform: scale(1.1);
+}
+
+.fab.active {
+  transform: rotate(45deg);
+}
+
+/* Quick Actions */
+.quick-actions {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 140;
+}
+
+.action-btn {
+  padding: 12px 16px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 25px;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: var(--transition);
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.quick-actions.show .action-btn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.action-btn:nth-child(1) { transition-delay: 0.1s; }
+.action-btn:nth-child(2) { transition-delay: 0.2s; }
+.action-btn:nth-child(3) { transition-delay: 0.3s; }
+
+.action-btn:hover {
+  background: var(--accent-color);
+  transform: translateX(-5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .app-title {
+    font-size: 1.3rem;
+  }
+
+  .tab-navigation {
+    top: 120px;
+  }
+
+  .nav-container {
+    justify-content: center;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .calculator-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .battery-details {
+    grid-template-columns: 1fr;
+  }
+
+  .time {
+    font-size: 2rem;
+  }
+
+  .banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .fab {
+    bottom: 100px;
+  }
+
+  .quick-actions {
+    bottom: 170px;
+  }
+
+  .calculus-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .calculus-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .weather-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .color-palette {
+    gap: 0.5rem;
+  }
+
+  .color-option {
+    width: 30px;
+    height: 30px;
+  }
+
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+
+  .temperature {
+    font-size: 1.5rem;
+  }
+
+  .display-main {
+    font-size: 1.5rem;
+  }
+
+  .calc-btn {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape Tablet */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header-content {
+    padding: 0 2rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .card:nth-child(1),
+  .card:nth-child(2) {
+    grid-column: span 1;
+  }
+}
+
+/* Dark mode adjustments for better visibility */
+@media (prefers-color-scheme: light) {
+  :root {
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 0, 0, 0.1);
+    --text-color: #333333;
+    --text-secondary: #666666;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --card-border: rgba(255, 255, 255, 0.3);
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .fab,
+  .quick-actions,
+  .install-banner {
+    display: none !important;
+  }
+
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}

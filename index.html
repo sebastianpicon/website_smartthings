@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartThings PWA</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SmartThings">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+    <link rel="apple-touch-icon" href="./assets/icon-192.svg">
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <span class="icon">⚡</span>
+                    SmartThings
+                </h1>
+                <div class="battery-widget" id="batteryWidget">
+                    <div class="battery-icon">🔋</div>
+                    <div class="battery-info">
+                        <span id="batteryLevel">--</span>%
+                        <div class="battery-status" id="batteryStatus">Unknown</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="dashboard-grid">
+                <!-- Battery Card -->
+                <div class="card battery-card">
+                    <div class="card-header">
+                        <h3>Battery Status</h3>
+                        <div class="battery-visual">
+                            <div class="battery-shell">
+                                <div class="battery-fill" id="batteryFill"></div>
+                                <div class="battery-tip"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="battery-details">
+                            <div class="detail-item">
+                                <span class="label">Level:</span>
+                                <span id="detailBatteryLevel">--</span>%
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Status:</span>
+                                <span id="detailBatteryStatus">Unknown</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Charging Time:</span>
+                                <span id="chargingTime">--</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Discharge Time:</span>
+                                <span id="dischargeTime">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clock Card -->
+                <div class="card clock-card">
+                    <div class="card-header">
+                        <h3>Current Time</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="digital-clock">
+                            <div class="time" id="currentTime">00:00:00</div>
+                            <div class="date" id="currentDate">Loading...</div>
+                        </div>
+                        <div class="analog-clock" id="analogClock">
+                            <div class="clock-face">
+                                <div class="hour-hand" id="hourHand"></div>
+                                <div class="minute-hand" id="minuteHand"></div>
+                                <div class="second-hand" id="secondHand"></div>
+                                <div class="center-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Info Card -->
+                <div class="card system-card">
+                    <div class="card-header">
+                        <h3>System Information</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="system-info">
+                            <div class="info-item">
+                                <span class="label">Browser:</span>
+                                <span id="browserInfo">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Platform:</span>
+                                <span id="platformInfo">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Screen:</span>
+                                <span id="screenInfo">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Online:</span>
+                                <span id="onlineStatus" class="status-indicator">--</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Memory:</span>
+                                <span id="memoryInfo">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Card -->
+                <div class="card weather-card">
+                    <div class="card-header">
+                        <h3>Local Weather</h3>
+                        <div class="location-info" id="locationInfo">📍 Getting location...</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="weather-display">
+                            <div class="weather-icon" id="weatherIcon">⏳</div>
+                            <div class="weather-info">
+                                <div class="temperature" id="temperature">--°</div>
+                                <div class="weather-description" id="weatherDescription">Loading...</div>
+                                <div class="weather-details">
+                                    <div class="detail-row">
+                                        <span>Humidity: <span id="humidity">--%</span></span>
+                                        <span>Wind: <span id="windSpeed">-- km/h</span></span>
+                                    </div>
+                                    <div class="detail-row">
+                                        <span>Feels like: <span id="feelsLike">--°</span></span>
+                                        <span>UV Index: <span id="uvIndex">--</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-actions">
+                            <button class="refresh-btn" id="refreshWeather">🔄 Refresh</button>
+                            <button class="location-btn" id="getLocationBtn">📍 Get Location</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Link Card -->
+                <div class="card calculator-link-card">
+                    <div class="card-header">
+                        <h3>Advanced Calculator</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="calculator-preview">
+                            <div class="preview-icon">🧮</div>
+                            <div class="preview-info">
+                                <h4>Scientific & Calculus Calculator</h4>
+                                <p>Advanced calculator with basic, scientific, and calculus functions including derivatives, integrals, and limits.</p>
+                            </div>
+                        </div>
+                        <a href="calculator.html" class="calculator-link-btn">
+                            🚀 Open Calculator
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Color Palette Card -->
+                <div class="card palette-card">
+                    <div class="card-header">
+                        <h3>Dynamic Theme</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="color-palette">
+                            <div class="color-option" data-theme="default" style="background: linear-gradient(135deg, #1a1a2e, #16213e)"></div>
+                            <div class="color-option" data-theme="ocean" style="background: linear-gradient(135deg, #0077be, #004d7a)"></div>
+                            <div class="color-option" data-theme="forest" style="background: linear-gradient(135deg, #2d5016, #3d6b26)"></div>
+                            <div class="color-option" data-theme="sunset" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52)"></div>
+                            <div class="color-option" data-theme="purple" style="background: linear-gradient(135deg, #667eea, #764ba2)"></div>
+                        </div>
+                        <div class="theme-info">
+                            <span>Tap a color to change theme</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Monitor -->
+                <div class="card performance-card">
+                    <div class="card-header">
+                        <h3>Performance Monitor</h3>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="performanceChart" width="300" height="150"></canvas>
+                        <div class="performance-stats">
+                            <div class="stat-item">
+                                <span class="label">FPS:</span>
+                                <span id="fpsCounter">--</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="label">Frame Time:</span>
+                                <span id="frameTime">--</span>ms
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Install Banner -->
+        <div class="install-banner" id="installBanner" style="display: none;">
+            <div class="banner-content">
+                <span>📱 Install SmartThings PWA for the best experience!</span>
+                <div class="banner-buttons">
+                    <button id="installBtn">Install</button>
+                    <button id="dismissBtn">Dismiss</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="fab" title="Quick Actions">
+            <span>+</span>
+        </button>
+
+        <!-- Quick Actions Menu -->
+        <div class="quick-actions" id="quickActions" style="display: none;">
+            <button class="action-btn" id="fullscreenBtn">🔳 Fullscreen</button>
+            <button class="action-btn" id="shareBtn">🔗 Share</button>
+            <button class="action-btn" id="refreshBtn">🔄 Refresh All</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/app.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
